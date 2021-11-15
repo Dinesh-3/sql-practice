@@ -3,11 +3,11 @@ USE sql_invoicing;
 
 SELECT 
 	AVG(invoice_total) AS average_sale,
-    MAX(invoice_total) AS max_invoice_sale,
-    MIN(invoice_total) AS min_invoice_sale,
-    SUM(invoice_total * 1) AS invoice_total,
-    COUNT(*) AS total_invoices,
-    COUNT(DISTINCT client_id) AS total_invoice_clients
+  MAX(invoice_total) AS max_invoice_sale,
+  MIN(invoice_total) AS min_invoice_sale,
+  SUM(invoice_total * 1) AS invoice_total,
+  COUNT(*) AS total_invoices,
+  COUNT(DISTINCT client_id) AS total_invoice_clients
 FROM invoices
 ;
 
