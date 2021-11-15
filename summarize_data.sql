@@ -13,6 +13,20 @@ FROM invoices
 
 -- END --
 
+-- Second Max
+USE sql_hr;
+
+-- SELECT * FROM employees
+-- ORDER BY salary DESC
+-- LIMIT 4,2;
+
+SELECT max(salary) from employees
+where salary NOT IN (
+SELECT max(salary) from employees
+);
+
+-- END --
+
 USE sql_invoicing;
 
 SELECT 
@@ -27,10 +41,10 @@ WHERE invoice_date BETWEEN '2019-01-01' AND '2019-06-30'
 UNION
 
 SELECT 
-	'second half of 2019' AS date_range,
+	'second half of 2019' AS date_range, -- AS date_range optinal, Both query must have same length of column
 	SUM(invoice_total) AS total_sales,
-    SUM(payment_total) AS total_payments,
-    SUM(invoice_total - payment_total) AS what_we_expect
+  SUM(payment_total) AS total_payments,
+  SUM(invoice_total - payment_total) AS what_we_expect
 FROM invoices
 
 WHERE invoice_date BETWEEN '2019-07-01' AND '2019-12-31'
@@ -40,8 +54,8 @@ UNION
 SELECT 
 	'total' AS date_range,
 	SUM(invoice_total) AS total_sales,
-    SUM(payment_total) AS total_payments,
-    SUM(invoice_total - payment_total) AS what_we_expect
+  SUM(payment_total) AS total_payments,
+  SUM(invoice_total - payment_total) AS what_we_expect
 FROM invoices
 
 WHERE invoice_date BETWEEN '2019-01-01' AND '2019-12-31'
@@ -65,7 +79,7 @@ USE sql_invoicing;
 
 SELECT  
 	client_id,
-    SUM(invoice_total) AS total
+  SUM(invoice_total) AS total
 FROM invoices
 -- WHERE is used before groubing
 GROUP BY client_id
