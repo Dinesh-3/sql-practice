@@ -8,6 +8,7 @@ SELECT
   SUM(invoice_total * 1) AS invoice_total,
   COUNT(*) AS total_invoices,
   COUNT(DISTINCT client_id) AS total_invoice_clients
+  VARIANCE(invoice_total) AS variance
 FROM invoices
 ;
 
@@ -26,6 +27,7 @@ SELECT max(salary) from employees
 );
 
 -- END --
+-- OPERATORS UNION, INTERSECT, MINUS (take left side rows minused from right side query)
 
 USE sql_invoicing;
 

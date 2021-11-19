@@ -53,6 +53,8 @@ SELECT lower("dinesh i");
 SELECT initcap("dinesh i");
 
 SELECT replace("dinesh", "nes", "&&&") -- di&&&h
+SELECT STUFF("dinesh", 1, 2, "@") -- Not support in Mysql equalent INSERT
+SELECT INSERT("dinesh", 1, 2, "@") -- @nesh
 
 SELECT left("dinesh", 3) -- din
 SELECT right("dinesh", 3) -- esh
@@ -81,3 +83,8 @@ SELECT mod(5, 2); -- Returns Modulo of number or remainder of number mod(number,
 select greatest(1,2,3,5,6); -- MAX value
 select least(1,2,3,5,6); -- MIN value
 
+-- CONDITIONAL FUNCTIONS
+select if(Id is null, 0, id) as Id; -- equalent to select id = id == null ? 0 : id;
+
+USE sql_store;
+SELECT IFNULL(`phone`, 'N/A') FROM `customers`
