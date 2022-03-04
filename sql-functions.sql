@@ -6,8 +6,10 @@ USE sql_store;
 -- Two ways to declare variable
 SET @first_name = "Dinesh"
 SELECT @last_name := "I"
+SELECT @first_name, @last_name -- To display
 
-SELECT order_id, IF(shipped_date, "Not Assigned") FROM orders;
+-- IF(condition, value_when_true, value_when_false)
+SELECT *, IF(shipped_date, shipped_date, "Not Assigned") FROM orders; 
 select COALESCE(null, "Dinesh"); -- returns first non null value
 
 -- DATE FUNCTIONS ---
@@ -19,7 +21,7 @@ SELECT year(now()), month(now()), day(now()), hour(now()), minute(now()), second
 
 UPDATE student
 	SET first_name = 'Dinesh',
-		  updated_at = CAST(NOW() AS DATETIME)
+		  updated_at = CAST(NOW() AS DATETIME) -- DATE, TIME, YEAR, TIMESTAMP
 	WHERE id = 1;
 
 SELECT current_date;
@@ -54,12 +56,12 @@ SELECT initcap("dinesh i");
 
 SELECT replace("dinesh", "nes", "&&&") -- di&&&h
 SELECT STUFF("dinesh", 1, 2, "@") -- Not support in Mysql equalent INSERT
-SELECT INSERT("dinesh", 1, 2, "@") -- @nesh
+SELECT INSERT("dinesh", 1, 2, "@") -- @nesh , 1 to 2 inclusive
 
 SELECT left("dinesh", 3) -- din
 SELECT right("dinesh", 3) -- esh
-SELECT substring("dinesh", 2) -- nesh
-SELECT substring("dinesh", 2, 3) -- nes substring(word, startPosition, howMuchCharactor)
+SELECT substring("dinesh", 2) -- inesh
+SELECT substring("dinesh", 2, 3) -- ine substring(word, startPosition, howMuchCharactor)
 
 SELECT locate("n", "dinesh") -- 3 not case sensitive, locate("f") return 0 if not found
 
@@ -67,12 +69,13 @@ SELECT locate("n", "dinesh") -- 3 not case sensitive, locate("f") return 0 if no
 
 SELECT round(5.4),round(5.5),round(5.6);
 SELECT round(5.7367, 2) -- 5.74 return number with 2 decimal points with rounding
-SELECT truncate(5.7367, 2); -- 5.73 return number with 2 decimal points
+SELECT truncate(5.7367, 2); -- 5.73 return number with 2 decimal points without rounding numeber
 SELECT ceil(5.4),ceil(5.5),ceil(6);
 SELECT floor(5.4),floor(5.5),floor(5.7),floor(6);
 
 SELECT abs(-22),abs(22);
 SELECT rand(); -- To generate Random number
+SELECT rand() * 10;
 
 -- sign takes a number as its argument and returns -1 if the number is negative, 
 -- 0 if the number is 0, and 1 if the number is positive.

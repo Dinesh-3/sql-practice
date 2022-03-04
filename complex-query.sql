@@ -1,6 +1,7 @@
 
 -- nested sub query example  
 
+-- Find third max amount in payments table
 USE sql_invoicing;
 
 SELECT MAX(amount) FROM payments
@@ -14,7 +15,7 @@ WHERE amount < (
 
 SELECT * FROM payments -- same result as above
 ORDER BY amount DESC
-LIMIT 2,1;
+LIMIT 2,1; -- index start from 0, to 2 then select 1 record
 
 -- select invoice larger than all invoices of client 3
 USE sql_invoicing;
@@ -86,9 +87,15 @@ WHERE invoice_total > (
     WHERE client_id = i.client_id
 )
 
-USE sql_invoicing;
 
 -- get clients who's have an invoice
+USE sql_invoicing;
+SELECT * FROM clients c
+WHERE client_id IN ( -- efficient
+	SELECT DISTINCT client_id FROM invoices
+);
+
+USE sql_invoicing;
 SELECT * FROM clients c
 WHERE client_id IN ( -- less efficient
 	SELECT DISTINCT client_id FROM invoices
@@ -97,7 +104,7 @@ WHERE client_id IN ( -- less efficient
 
 USE sql_invoicing;
 SELECT * FROM clients c
-WHERE EXISTS ( -- more efficient it doesn't return actual result it return boolean
+WHERE EXISTS ( -- more efficient than above it doesn't return actual result it return boolean
 	SELECT client_id FROM invoices -- * also works
     WHERE c.client_id = client_id
 );
@@ -130,7 +137,7 @@ SELECT invoice_id,
   (
     SELECT AVG(invoice_total) FROM invoices
   ) AS average_total,
-  invoice_total - ( SELECT average_total ) AS difference -- For Alias need to add SELECT
+  invoice_total - ( SELECT average_total ) AS difference -- For Alias names, SELECT need to be added
 
 FROM invoices;
 
@@ -182,5 +189,23 @@ FROM (
 
 WHERE invoice_total IS NOT NULL
 ;
+
+USE sql_invoicing;
+
+SELECT SUM(total_sales) FROM (
+SELECT  
+  SUM(invoice_total) AS total_sales
+FROM invoices i
+JOIN clients c USING (client_id)
+GROUP BY state
+) AS sales
+
+-- calculating total with rollup
+SELECT  
+  state,
+  SUM(invoice_total) AS total_sales
+FROM invoices i
+JOIN clients c USING (client_id)
+GROUP BY state WITH ROLLUP;
 
 -- END --

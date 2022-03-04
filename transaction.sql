@@ -1,4 +1,4 @@
--- Transaction is a group of SQL statement that represents single of work
+-- Transaction is a group of SQL statement that represents single work
 -- All statement need to successful or failed together with rollback mechanism
 -- ACID Properties
 -- Atomity, Consistency, Isolation, Durability

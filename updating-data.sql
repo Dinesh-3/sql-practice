@@ -27,7 +27,7 @@ WHERE customer_id IN (
   WHERE points > 3000
 );
 
--- MERGE With previous table
+-- MERGE With previous column value
 USE sql_store;
 UPDATE products
 SET quantity_in_stock = quantity_in_stock + 5

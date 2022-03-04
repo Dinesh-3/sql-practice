@@ -7,7 +7,7 @@ SELECT
   MIN(invoice_total) AS min_invoice_sale,
   SUM(invoice_total * 1) AS invoice_total,
   COUNT(*) AS total_invoices,
-  COUNT(DISTINCT client_id) AS total_invoice_clients
+  COUNT(DISTINCT client_id) AS total_invoice_clients,
   VARIANCE(invoice_total) AS variance
 FROM invoices
 ;
